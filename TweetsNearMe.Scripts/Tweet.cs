@@ -6,7 +6,7 @@ namespace TweetsNearMe.Scripts
 {
    public class Tweet
    {
-      public Int32 Id;
+      public long Id;
 
       public String FromUser;
 

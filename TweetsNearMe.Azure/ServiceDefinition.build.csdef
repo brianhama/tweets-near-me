@@ -9,19 +9,17 @@
   **********************************************************************************************
 -->
 <ServiceDefinition name="TweetsNearMe.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="TweetsNearMe.Web" vmsize="Small">
+  <WebRole name="TweetsNearMe.Web" vmsize="ExtraSmall">
     <Sites>
       <Site name="Web">
         <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding name="Endpoint1" endpointName="HttpEndpoint" />
         </Bindings>
       </Site>
     </Sites>
     <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="HttpEndpoint" protocol="http" port="80" />
     </Endpoints>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
+    <Imports></Imports>
   </WebRole>
 </ServiceDefinition>

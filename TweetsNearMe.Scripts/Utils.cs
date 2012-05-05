@@ -28,5 +28,31 @@ namespace TweetsNearMe.Scripts
          }
          Document.Cookie = name + "=" + value + expires + "; path=/";
       }
+
+      public static string GetLanguage()
+      {
+         try
+         {
+            if (!Script.IsNullOrUndefined(Window.Navigator.BrowserLanguage))
+               return Window.Navigator.BrowserLanguage.Substr(0, 2).ToLowerCase();
+         }
+         catch { }
+
+         try
+         {
+            if (!Script.IsNullOrUndefined(Window.Navigator.SystemLanguage))
+               return Window.Navigator.SystemLanguage.Substr(0, 2).ToLowerCase();
+         }
+         catch { }
+
+         try
+         {
+            if (!Script.IsNullOrUndefined(Window.Navigator.UserLanguage))
+               return Window.Navigator.UserLanguage.Substr(0, 2).ToLowerCase();
+         }
+         catch { }
+
+         return "en";
+      }
    }
 }

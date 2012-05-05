@@ -91,6 +91,31 @@ TweetsNearMe.Scripts.Utils.writeCookie = function TweetsNearMe_Scripts_Utils$wri
     }
     document.cookie = name + '=' + value + expires + '; path=/';
 }
+TweetsNearMe.Scripts.Utils.getLanguage = function TweetsNearMe_Scripts_Utils$getLanguage() {
+    /// <returns type="String"></returns>
+    try {
+        if (!ss.isNullOrUndefined(window.navigator.browserLanguage)) {
+            return window.navigator.browserLanguage.substr(0, 2).toLowerCase();
+        }
+    }
+    catch ($e1) {
+    }
+    try {
+        if (!ss.isNullOrUndefined(window.navigator.systemLanguage)) {
+            return window.navigator.systemLanguage.substr(0, 2).toLowerCase();
+        }
+    }
+    catch ($e2) {
+    }
+    try {
+        if (!ss.isNullOrUndefined(window.navigator.userLanguage)) {
+            return window.navigator.userLanguage.substr(0, 2).toLowerCase();
+        }
+    }
+    catch ($e3) {
+    }
+    return 'en';
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,38 +150,50 @@ TweetsNearMe.Scripts.TweetsViewModel = function TweetsNearMe_Scripts_TweetsViewM
     /// </field>
     /// <field name="_refreshTimer" type="Number" integer="true">
     /// </field>
+    /// <field name="_lastID" type="Number" integer="true">
+    /// </field>
 }
 TweetsNearMe.Scripts.TweetsViewModel.prototype = {
     currentTweets: null,
     _refreshTimer: 0,
+    _lastID: 0,
     
-    _clearTweets: function TweetsNearMe_Scripts_TweetsViewModel$_clearTweets() {
+    clearTweets: function TweetsNearMe_Scripts_TweetsViewModel$clearTweets() {
         while (this.currentTweets().length > 0) {
             this.currentTweets.shift();
         }
+        $('#loading-indicator').show();
+        this._lastID = -1;
+        this.refresh();
     },
     
     refresh: function TweetsNearMe_Scripts_TweetsViewModel$refresh() {
         if (this._refreshTimer > -1) {
             window.clearTimeout(this._refreshTimer);
         }
-        var LastID = -1;
-        if (this.currentTweets().length > 0) {
-            LastID = this.currentTweets()[this.currentTweets().length - 1].id;
-        }
-        var Url = String.format('http://search.twitter.com/search.json?callback=?&result_type=recent&q=&geocode={0},{1},{2}mi&rpp=25{3}', TweetsNearMe.Scripts.LocationHelper.get_latitude(), TweetsNearMe.Scripts.LocationHelper.get_longitude(), this._getMaxDistance(), ((LastID > -1) ? ('&since_id=' + LastID) : ''));
+        var Url = String.format('http://search.twitter.com/search.json?callback=?&result_type=recent&lang={0}&q=&geocode={1},{2},{3}mi&rpp=25{4}', TweetsNearMe.Scripts.Utils.getLanguage(), TweetsNearMe.Scripts.LocationHelper.get_latitude(), TweetsNearMe.Scripts.LocationHelper.get_longitude(), this._getMaxDistance(), ((this._lastID > -1) ? ('&since_id=' + this._lastID) : ''));
         var ajaxOptions = {};
         ajaxOptions.dataType = 'jsonp';
         ajaxOptions.success = ss.Delegate.create(this, function(data, textStatus, request) {
+            $('#loading-indicator').hide();
             var results = data.results;
+            results.reverse();
             for (var i = 0; i < results.length; i++) {
                 var tweet = new TweetsNearMe.Scripts.Tweet();
-                tweet.created_at = results[i].created_at;
+                tweet.created_at = (results[i].created_at).replaceAll(' +0000', '');
                 tweet.id = results[i].id;
-                tweet.profileImageUrl = results[i].profileImageUrl;
+                if (tweet.id > this._lastID) {
+                    this._lastID = tweet.id;
+                }
+                tweet.profileImageUrl = results[i].profile_image_url;
                 tweet.text = results[i].text;
-                tweet.fromUser = results[i].fromUser;
-                this.currentTweets.push(tweet);
+                tweet.fromUser = results[i].from_user;
+                if (this.currentTweets().length > 0) {
+                    if (this.currentTweets()[0].id === tweet.id) {
+                        continue;
+                    }
+                }
+                this.currentTweets.unshift(tweet);
             }
             this._refreshTimer = window.setTimeout(ss.Delegate.create(this, this.refresh), 2500);
         });
@@ -169,10 +206,19 @@ TweetsNearMe.Scripts.TweetsViewModel.prototype = {
     initViewModel: function TweetsNearMe_Scripts_TweetsViewModel$initViewModel() {
         this.currentTweets = ko.observableArray();
         this._refreshTimer = -1;
+        this._lastID = -1;
         var maxDistance = TweetsNearMe.Scripts.Utils.getCookieValue('Max-Distance');
         if (!String.isNullOrEmpty(maxDistance)) {
             $('#max-distance-field').val(maxDistance);
+            $('#max-distance-field').trigger('refresh');
         }
+        $('#max-distance-field').change(ss.Delegate.create(this, this._distanceChangeHandler));
+    },
+    
+    _distanceChangeHandler: function TweetsNearMe_Scripts_TweetsViewModel$_distanceChangeHandler(args) {
+        /// <param name="args" type="jQueryEvent">
+        /// </param>
+        this.clearTweets();
     },
     
     _getMaxDistance: function TweetsNearMe_Scripts_TweetsViewModel$_getMaxDistance() {
