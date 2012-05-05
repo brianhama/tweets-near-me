@@ -2,8 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetsNearMe.Web", "TweetsNearMe.Web.csproj", "{232CDCFE-358E-45BA-A8FF-FD15CCFDDE2F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{790494D4-F2E3-430F-9B17-5689D8756861} = {790494D4-F2E3-430F-9B17-5689D8756861}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetsNearMe.Scripts", "..\TweetsNearMe.Scripts\TweetsNearMe.Scripts.csproj", "{790494D4-F2E3-430F-9B17-5689D8756861}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "TweetsNearMe.Azure", "..\TweetsNearMe.Azure\TweetsNearMe.Azure.ccproj", "{96DCF124-942D-4B8A-A3B1-BC3E66DB23DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +24,10 @@ Global
 		{790494D4-F2E3-430F-9B17-5689D8756861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{790494D4-F2E3-430F-9B17-5689D8756861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{790494D4-F2E3-430F-9B17-5689D8756861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96DCF124-942D-4B8A-A3B1-BC3E66DB23DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96DCF124-942D-4B8A-A3B1-BC3E66DB23DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96DCF124-942D-4B8A-A3B1-BC3E66DB23DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96DCF124-942D-4B8A-A3B1-BC3E66DB23DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
