@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>Tweets Near Me</title>
+</head>
+<body>
+   <div data-role="page">
+      <div data-role="header">
+         <h1>
+            Login</h1>
+      </div>
+      <div data-role="content">
+         <label for="tNumber">AT&T Mobile Number:</label>
+         <input id="tNumber" type="tel" placeholder="555-555-5555" onchange="document.getElementById('continueBtn').href = 'https://api.att.com/oauth/authorize?client_id=95578ca832fd253acdf012133ec4f2b9&scope=TL&redirect_uri=http://www.tweetsnearme.com/OAuthHandler.ashx?t=' + this.value" />
+         <a id="continueBtn" href="" data-ajax="false" data-role="button">Continue</a>
+      </div>
+   </div>
+</body>
+</html>

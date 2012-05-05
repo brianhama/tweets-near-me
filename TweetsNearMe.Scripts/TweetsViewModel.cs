@@ -29,7 +29,7 @@ namespace TweetsNearMe.Scripts
          if (refreshTimer > -1)
             Window.ClearTimeout(refreshTimer);
 
-         String Url = String.Format("http://search.twitter.com/search.json?callback=?&result_type=recent&lang={0}&q=&geocode={1},{2},{3}mi&rpp=25{4}", Utils.GetLanguage(), LocationHelper.Latitude, LocationHelper.Longitude, GetMaxDistance(), (LastID > -1 ? ("&since_id=" + LastID) : ""));
+         String Url = String.Format("http://search.twitter.com/search.json?callback=?&result_type=recent&lang={0}&q=&geocode={1},{2},{3}mi&rpp=5{4}", Utils.GetLanguage(), LocationHelper.Latitude, LocationHelper.Longitude, GetMaxDistance(), (LastID > -1 ? ("&since_id=" + LastID) : ""));
          jQueryAjaxOptions ajaxOptions = new jQueryAjaxOptions();
          ajaxOptions.DataType = "jsonp";
          ajaxOptions.Success = new AjaxRequestCallback(delegate(object data, string textStatus, jQueryXmlHttpRequest request) {
@@ -46,6 +46,11 @@ namespace TweetsNearMe.Scripts
                tweet.ProfileImageUrl = (String)Type.GetField(results[i], "profile_image_url");
                tweet.Text = (String)Type.GetField(results[i], "text");
                tweet.FromUser = (String)Type.GetField(results[i], "from_user");
+
+               String tweetUrl = "https://twitter.com/" + tweet.FromUser + "/status/" + tweet.Id;
+               String tweetTitle = tweet.FromUser + "'s Tweet";
+
+               tweet.ShareUrl = "http://www.facebook.com/sharer.php?u=" + tweetUrl.EncodeUriComponent() + "&t=" + tweetTitle.EncodeUriComponent();
 
                if (CurrentTweets.GetItems().Count > 0)
                {

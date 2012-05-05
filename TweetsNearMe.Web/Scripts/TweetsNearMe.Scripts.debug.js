@@ -132,13 +132,20 @@ TweetsNearMe.Scripts.Tweet = function TweetsNearMe_Scripts_Tweet() {
     /// </field>
     /// <field name="profileImageUrl" type="String">
     /// </field>
+    /// <field name="shareUrl" type="String">
+    /// </field>
 }
 TweetsNearMe.Scripts.Tweet.prototype = {
     id: 0,
     fromUser: null,
     text: null,
     created_at: null,
-    profileImageUrl: null
+    profileImageUrl: null,
+    shareUrl: null,
+    
+    shareTweet: function TweetsNearMe_Scripts_Tweet$shareTweet() {
+        window.location.assign(this.shareUrl);
+    }
 }
 
 
@@ -188,6 +195,9 @@ TweetsNearMe.Scripts.TweetsViewModel.prototype = {
                 tweet.profileImageUrl = results[i].profile_image_url;
                 tweet.text = results[i].text;
                 tweet.fromUser = results[i].from_user;
+                var tweetUrl = 'https://twitter.com/' + tweet.fromUser + '/status/' + tweet.id;
+                var tweetTitle = tweet.fromUser + "'s Tweet";
+                tweet.shareUrl = 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(tweetUrl) + '&t=' + encodeURIComponent(tweetTitle);
                 if (this.currentTweets().length > 0) {
                     if (this.currentTweets()[0].id === tweet.id) {
                         continue;

@@ -16,9 +16,10 @@
 <body>
    <div data-role="page" id="home-page" data-theme="d">
       <div data-role="header" data-theme="b" data-position="fixed">
-         <a href="index.htm" data-role="button" data-icon="home">Login</a>
-         <h1>Tweets Near Me</h1>
-         <a href="about.htm" data-role="button" data-icon="info" data-rel="dialog">About</a>
+         <a href="login.htm" data-role="button">find me</a>
+         <h1>
+            Tweets Near Me</h1>
+         <a href="about.htm" data-role="button" data-rel="dialog">info</a>
       </div>
       <div data-role="content" data-theme="d" id="twitter-feed">
          <div class="twitter-feed">
@@ -31,8 +32,8 @@
                   </td>
                   <td>
                      <a class="twitter-user" data-bind="attr: { href: 'http://m.twitter.com/' + fromUser }, text: fromUser">
-                     </a>: <span data-bind="text: text"></span>
-                     <div class="tweet-info" data-bind="text: created_at">
+                     </a>: <span data-bind="text: text, click: shareTweet"></span>
+                     <div class="tweet-info" data-bind="text: created_at, click: shareTweet">
                      </div>
                   </td>
                </tr>
@@ -46,8 +47,7 @@
                   <strong>Max Distance:</strong>
                </td>
                <td>
-                  <select id="max-distance-field" data-theme="a" data-mini="true"
-                     data-inline="true">
+                  <select id="max-distance-field" data-theme="a" data-mini="true" data-inline="true">
                      <option value="50">50 miles</option>
                      <option value="25">25 miles</option>
                      <option value="20">20 miles</option>

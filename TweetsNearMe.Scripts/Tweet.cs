@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Html;
 
 namespace TweetsNearMe.Scripts
 {
@@ -16,5 +17,12 @@ namespace TweetsNearMe.Scripts
       public String Created;
 
       public String ProfileImageUrl;
+
+      public String ShareUrl;
+
+      public void ShareTweet()
+      {
+         Window.Location.Assign(ShareUrl);
+      }
    }
 }

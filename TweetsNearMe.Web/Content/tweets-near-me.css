@@ -1,7 +1,15 @@
-﻿.twitter-feed
+﻿*.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+.twitter-feed
 {
    font: 13px/20px "Lucida Grande" , "Lucida Sans Unicode" , Tahoma, Verdana, sans-serif;
-   width: 100%;
+   left: 0;
+   right: 0;
    overflow-x: hidden;
    color: #333333;
    position: relative;
