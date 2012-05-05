@@ -1,0 +1,51 @@
+﻿.twitter-feed
+{
+   font: 13px/20px "Lucida Grande" , "Lucida Sans Unicode" , Tahoma, Verdana, sans-serif;
+   width: 100%;
+   overflow-x: hidden;
+   color: #333333;
+   padding: 0.5em;
+   position: relative;
+}
+.twitter-feed table
+{
+   border-width: 0;
+}
+.twitter-feed tr
+{
+   vertical-align: top;
+}
+.twitter-feed td
+{
+   padding: 0.4em 0.3em 1em 0.4em;
+   border-width: 0;
+}
+.twitter-feed img
+{
+   width: 4em;
+}
+
+.tweet-info
+{
+   color: Gray;
+   font-size: 0.9em;
+}
+
+.twitter-user
+{
+   color: #77AAFF;
+   text-decoration: none;
+   font-size: 1.1em;
+   font-weight: bold;
+}
+
+.loading-indicator
+{
+   position: absolute;
+   top: 0.1em;
+   left: 0.1em;
+   font: 0.8em Arial;
+   background-color: #229;
+   color: White;
+   padding: 0.2em 0.5em 0.2em 0.5em;
+}

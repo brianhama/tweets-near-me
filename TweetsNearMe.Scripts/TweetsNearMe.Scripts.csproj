@@ -41,14 +41,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib, Version=0.7.0.0, Culture=neutral, PublicKeyToken=8fc0e3af5abcb6c4, processorArchitecture=MSIL" />
+    <Reference Include="Script.Knockout, Version=0.7.0.0, Culture=neutral, PublicKeyToken=8fc0e3af5abcb6c4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SynergeTechSolutions\ThirdParty\scriptsharp\bin\Release\Script.Knockout.dll</HintPath>
+    </Reference>
     <Reference Include="Script.Web" />
     <Reference Include="Script.jQuery" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LocationHelper.cs" />
+    <Compile Include="Utils.cs" />
     <Content Include="Properties\TweetsNearMe.Scripts.ruleset" />
     <Content Include="Properties\TweetsNearMe.Scripts.script" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Tweet.cs" />
+    <Compile Include="TweetsViewModel.cs" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\ScriptSharp\v1.0\ScriptSharp.targets" />
 </Project>
